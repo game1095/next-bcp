@@ -3,12 +3,13 @@
 import React, { useState } from "react";
 import DataTable from "./DataTable";
 import BCPTracking from "./BCPTracking";
+import BCPWeeklyTracking from "./BCPWeeklyTracking";
 import BCPComparison from "./BCPComparison";
 import { SheetDataRow } from "@/lib/fetch-sheets";
-import { LayoutDashboard, Database, BarChart3 } from "lucide-react";
+import { LayoutDashboard, Database, BarChart3, Activity } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export type TabValue = "tracking" | "comparison" | "raw";
+export type TabValue = "tracking" | "weekly" | "comparison" | "raw";
 
 interface DashboardTabsProps {
   data: SheetDataRow[];
@@ -19,6 +20,7 @@ export default function DashboardTabs({ data }: DashboardTabsProps) {
 
   const tabs = [
     { id: "tracking", label: "ติดตามสถานะ Baseline", icon: LayoutDashboard },
+    { id: "weekly", label: "สัปดาห์ที่ 6 - 12 เม.ย. 2569", icon: Activity },
     { id: "comparison", label: "เปรียบเทียบข้อมูล", icon: BarChart3 },
     { id: "raw", label: "ข้อมูลดิบ", icon: Database },
   ] as const;
@@ -55,6 +57,7 @@ export default function DashboardTabs({ data }: DashboardTabsProps) {
 
       <div className="flex-1 overflow-hidden relative">
         {activeTab === "tracking" && <BCPTracking data={data} />}
+        {activeTab === "weekly" && <BCPWeeklyTracking data={data} />}
         {activeTab === "comparison" && <BCPComparison data={data} />}
         {activeTab === "raw" && <DataTable data={data} />}
       </div>
